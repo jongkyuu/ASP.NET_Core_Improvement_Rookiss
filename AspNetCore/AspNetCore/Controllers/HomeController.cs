@@ -60,14 +60,15 @@ namespace AspNetCore.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            //string url = Url.Action("Privacy", "Home");
+            string url = Url.RouteUrl("test", new { test = 123 });
+            return Redirect(url);
+            //return View();
         }
 
         public IActionResult Privacy()
         {
             // 데이터 넘기는 테스트
-            int a = 1;
-            int b = 3 / (a - 1);
             ViewData["Message"] = "Data From Privacy";
             return View();
         }
