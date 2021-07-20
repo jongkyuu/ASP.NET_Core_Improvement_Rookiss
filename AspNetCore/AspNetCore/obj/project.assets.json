@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\GoogleDrive\\Study\\CSharp\\csharp_unity\\vs2019\\code\\ASP.Net_Core_심화\\AspNetCore\\AspNetCore\\AspNetCore.csproj",
+      "projectUniqueName": "C:\\GoogleDrive\\Study\\CSharp\\csharp_unity\\code\\ASP.Net_Core_심화\\AspNetCore\\AspNetCore\\AspNetCore.csproj",
       "projectName": "AspNetCore",
-      "projectPath": "C:\\GoogleDrive\\Study\\CSharp\\csharp_unity\\vs2019\\code\\ASP.Net_Core_심화\\AspNetCore\\AspNetCore\\AspNetCore.csproj",
+      "projectPath": "C:\\GoogleDrive\\Study\\CSharp\\csharp_unity\\code\\ASP.Net_Core_심화\\AspNetCore\\AspNetCore\\AspNetCore.csproj",
       "packagesPath": "C:\\Users\\LJK\\.nuget\\packages\\",
-      "outputPath": "C:\\GoogleDrive\\Study\\CSharp\\csharp_unity\\vs2019\\code\\ASP.Net_Core_심화\\AspNetCore\\AspNetCore\\obj\\",
+      "outputPath": "C:\\GoogleDrive\\Study\\CSharp\\csharp_unity\\code\\ASP.Net_Core_심화\\AspNetCore\\AspNetCore\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\LJK\\AppData\\Roaming\\NuGet\\NuGet.Config",
