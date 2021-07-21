@@ -9,45 +9,90 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.Controllers
 {
-    // MVC ( Model - View - Controller)
-    // Django, Rails, Spring, ASP.Net 등에 모두 있는 설계 패턴
-    // 
-    // Model : 데이터 모델을 의미, 메모리 파일 DB등을 이용해 정보 추출 (식당에서 재료 준비)
-    // Controller : 데이터 가공, 필터링, 유효성 체크, 서비스 호출 (재료를 가공하는 단계)
-    // + 각종 서비스 : 서비스를 이용해 요리. DI로 ConfigureServices에서 추가하는 서비스를 의미
-    // View : 최종 결과물을 어떻게 보여줄지 (최종 서빙)
-    // 이런 식으로 역할 분담을 나누는 것이 MVC의 철학임
+    // M(Model) 
+    // 데이터 모델
+    // - Binding Model
+    // 클라에서 보낸 Request를 파싱하기 위한 데이터 모델 << 유효성 검증 필수(클라는 신용할 수 없음)
+    // - Application Model
+    // 서버의 각종 서비스들이 사용하는 데이터 모델 ( ex. RankingService라면 RankingData)
+    // - View Model
+    // Response UI를 만들기 위한 데이터 모델
+    // - API Model
+    // WebAPI Controller에서 JSON / XML 포맷으로 응답할 때 필요한 데이터 모델
 
-    // 이렇게 역할 분담 할때의 장점은?
-    // 유동적으로 기능을 변경 할 수 있다. 
-    // ex) SPA(Json) Web(Html) 결과물이 다르면 View Layer만 바꾸고, Controller 재사용 가능
-    // 
-    // Action은 요청에 대한 실제 처리 함수(Handler)
-    // Controller는 Action을 포함 하고 있는 그룹 
+    // 일반적인 MVC 순서
+    // 1) 클라에서 HTTP Request가 옴
+    // 2) Routing에 의해 Controller / Action 정해짐
+    // 3) Model Biinding으로 Request에 있는 데이터를 파싱(Validation)
+    // 4) 담당 서비스로 전달 (Application Model로 바꿔서 전달)
+    // 5) 담당 서비스가 결과물을 Action에 돌려주면
+    // 6) Aciton에서 ViewModel을 이용해서 View로 전달
+    // 7) View에서 HTML 생성
+    // 8) Response로 HTML 결과물을 전송
 
-    // Contoller 상속이 무조건 필요한 것은 아님 
-    // View() 처럼 이미 정의된 Helper 기능 사용하고 싶으면 필요 
-    // UI(View)와 관련된 기능을 뺀 ControllerBase -> WebApi
+    // Model Binding
+    // 1) Form Values
+    //    - Request의 Body에서 보낸 값(HTTP Post 방식의 요청)
+    // 2) Routes Values
+    //    - URL 매칭, Defalut Values
+    // 3) Query String Values
+    //    - URL끝에 데이터를 붙이는 방법, ?Name=Rookiss (HTTP GET 방식의 요청)
 
-    // MVC에서 Controller의 역할은 데이터 가공, UI랑은 무관하다 (실질적인 기능 수행은 별도의 서비스를 이용)
-    // 넘길 때 IActionResult 넘긴다 ( View를 넘기는데 상속으로 구성되어 있기 때문)
-    // 자주 사용되는 IActionResult 종류
-    // 1) ViewResult : HTML View를 생성
-    // 2) RedirectResult : 요청을 다른 곳으로 토스 (다른 페이지로 연결해 줄 때 사용)
-    // 3) FileResult : 파일을 반환
-    // 4) ContentResult : 특정 string 반환
-    // 5) StatusCodeResult : Http status code 반환
-    // 6) NotFoundResult : 404 HTTP status code 반환 (404 못찾음!)
+    // 매우 감동적 -> 일일히 추출하지 않고 마치 ORM을 사용하듯이 편리하게! 알아서! 파라미터를 채워서 함수를 호출한다는게 신기
+    // 다른 프레임워크에서는 수동으로 하나하나 꺼내야 하는 경우가 있음
 
-    // new ViewResult() -> View()   둘다 똑같은 의미.  View()는 헬퍼 함수. 헬퍼 함수를 사용하기 위해서는 Controller를 상속받아야함
-    // new RedirectResult() -> Redirect()
-    // new NotFoundResult() -> NotFound()
+    // Route + Query String 혼합해서 사용 가능하지만, 
+    // 하나만 골라서 사용하는게 일반적임 -> 굳이 혼합한다면 ID만 Route 방식으로 넘기는 식으로 응용
 
-    // 결론 : MVC를 사용하면 역할 분담이 확실해진다
-    // 서로 종속된 코드를 만들면 하나를 수정할 때 다른 쪽에서 문제가 발생하는 일이 빈번하다
-    // MVC는 역할 분담으로 인해 코드의 종속성을 제거함
-    // MVC에서 V를 빼면 [MC]만 사용하게 될 경우 Web API가 됨
-    // 결과적으로 MVC나 WebAPI나 설계 철학 제체는 큰 차이가 없다
+    // Complex Type
+    // 넘겨받을 인자가 너무 많아지면 부담스러우니까
+    // 그냥 별도의 모델링 클래스를 만들어주면 된다 (Test2 메서드 참고)
+
+    // Collections
+    // 더 나아가서 List나 Dictionary로도 매핑을 할 수가 있음!
+
+    // Binding Source 지정
+    // 기본적으로 Binding Model은 Form, Route, QueryString
+    // 위의 삼총사 중 하나를 명시적으로 지정해서 파싱하거나, 다른 애로 지정할 수도 있음
+    // ex) 대표적으로 Body에서 JSON 형태로 데이터를 보내주고 싶을 떄
+    // 참고) Part9 WebAPI 실습에서도 사용한 적이 있음
+    // [FromHeader] HeaderValue에서 찾아라
+    // [FromQuery] QueryString에서 찾아라
+    // [FromRoute] Route Parameter에서 찾아라
+    // [FromForm] POST Body에서 찾아라
+    // [FromBody] 그냥 Body에서 찾아라 (디폴트 JSON -> 다른 형태로도 셋팅 가능)
+
+
+    // Validation
+    // 클라이언트-서버 구조는 늘 그렇지만, 신용할 수 없음
+    // 전화번호를 입력하라고 했는데 abcd 문자열을 보낸다거나
+    // 사진을 보내라고 했는데 10GB 파일을 보낸다거나
+    // 구매 수량을 음수로 보냈다거나 하는 등..
+
+    // Q) 근데 클라에서 Javascript 등으로 체크를 해서 걸러내면 되지 않을까?
+    // A) 정상적인 유저라면 OK. 그러나 게임서버나 웹에서 클라는 잠재적인 범죄자!
+
+
+    // DataAnnotation
+    // 데이터에 힌트를 줘서 강압적으로 체크를 하겠다는 의미
+    // Blazor 등에서 UI를 만들때도 사용
+    // 공용으로 사용되는 모델의
+    //   장점 : 기본 검증모델을 하나만 만들고 그걸 UI, 서버 등에서 사용할 수 있음
+    //   단점 : 세부적인 검사는 하기 힘들다
+
+    // [Required] 무조건 있어야 함
+    // [CreaditCard] 올바른 결제카드 번호인지
+    // [EmailAddress] 올바른 이메일 주소인지
+    // [StringLength(max)] String 길이가 최대 max인지
+    // [MinLength(min)] Collection의 크기가 최소 min인지
+    // [Phone] 올바른 전화번호인지
+    // [Range(min, max)] Min-Max 사이의 값인지
+    // [Url] 올바른 URL인지
+    // [Compare] 2개의 Property 비교 ex) (Password, ConfirmPassword)
+
+    // [!] Validation은 Attribute만 적용하면 알아서 자동으로 적용되지만,
+    // 하지만 결과에 대해서 어떻게 처리할지는 Action에서 정해야함
+    // Validation 결과를 ContollerBase의 ModelState에 저장한다
 
     public class HomeController : Controller
     {
@@ -58,12 +103,30 @@ namespace AspNetCore.Controllers
             _logger = logger;
         }
 
+        public IActionResult Test(int id, [FromHeader] string value)
+        {
+            return null;
+        }
+
+        public IActionResult Test2(TestModel testModel)
+        {
+            if (!ModelState.IsValid)   // Validation 실패시 ModelState.IsValid == True
+                return RedirectToAction("Error");
+            return null;
+        }
+
+        public IActionResult Test3(List<string> names)
+        {
+            return null;
+        }
+
         public IActionResult Index()
         {
-            //string url = Url.Action("Privacy", "Home");
-            string url = Url.RouteUrl("test", new { test = 123 });
-            return Redirect(url);
+            //string url = Url.RouteUrl("test", new { test = 123 });
+
+            //return Redirect(url);
             //return View();
+            return RedirectToAction("Privacy");
         }
 
         public IActionResult Privacy()
