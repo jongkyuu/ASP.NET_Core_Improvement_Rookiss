@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Hosting;
+ï»¿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -9,34 +9,34 @@ using System.Threading.Tasks;
 
 namespace AspNetCore
 {
-    // ±Ùµ¥ ¿Ö Program°ú StartupÀ¸·Î ¼ÂÆÃÀ» µÎ ¹ø¿¡ ³ª´²¼­ ÇÒ±î?
-    // Program Class¿¡¼­´Â ¾à°£ °Å½ÃÀûÀÎ °üÁ¡¿¡¼­ÀÇ ¼³Á¤ (HTTP ¼­¹ö, IIS »ç¿ë ¿©ºÎ µî.
-    //                                                 ÇÑ¹ø ¼³Á¤ÇØÁÖ¸é °ÅÀÇ ¹Ù²îÁö ¾ÊÀ½)
-    // StartupÀº ¼¼ºÎÀûÀÎ ¼³Á¤ ( ¹Ìµé¿ş¾î ¼³Á¤,
-    //                  Dependency Injection(»õ·Î¿î ¼­ºñ½º¸¦ ½ÃÀÛÇÑ´Ù´Â ´À³¦À¸·Î ÀÌÇØÇÏ¸é µÊ)
-    //                  µî ÇÊ¿ä¿¡ µû¶ó Ãß°¡/Á¶¸³)
+    // ê·¼ë° ì™œ Programê³¼ Startupìœ¼ë¡œ ì…‹íŒ…ì„ ë‘ ë²ˆì— ë‚˜ëˆ ì„œ í• ê¹Œ?
+    // Program Classì—ì„œëŠ” ì•½ê°„ ê±°ì‹œì ì¸ ê´€ì ì—ì„œì˜ ì„¤ì • (HTTP ì„œë²„, IIS ì‚¬ìš© ì—¬ë¶€ ë“±.
+    //                                                 í•œë²ˆ ì„¤ì •í•´ì£¼ë©´ ê±°ì˜ ë°”ë€Œì§€ ì•ŠìŒ)
+    // Startupì€ ì„¸ë¶€ì ì¸ ì„¤ì • ( ë¯¸ë“¤ì›¨ì–´ ì„¤ì •,
+    //                  Dependency Injection(ìƒˆë¡œìš´ ì„œë¹„ìŠ¤ë¥¼ ì‹œì‘í•œë‹¤ëŠ” ëŠë‚Œìœ¼ë¡œ ì´í•´í•˜ë©´ ë¨)
+    //                  ë“± í•„ìš”ì— ë”°ë¼ ì¶”ê°€/ì¡°ë¦½)
 
 
     public class Program
     {
-        // ÀÏ¹İÀûÀÎ ÄÜ¼Ö ¾Û
+        // ì¼ë°˜ì ì¸ ì½˜ì†” ì•±
         public static void Main(string[] args)
         {
-            // 3) IHost¸¦ ¸¸µë
-            // 4) ±¸µ¿(Run)  <  ÀÌ‹šºÎÅÍ Listen À» ½ÃÀÛ
+            // 3) IHostë¥¼ ë§Œë“¬
+            // 4) êµ¬ë™(Run)  <  ì´ë–„ë¶€í„° Listen ì„ ì‹œì‘
             CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-        // 1) °¢Á¾ ¿É¼Ç ¼³Á¤À» ¼ÂÆÃ
+        // 1) ê°ì¢… ì˜µì…˜ ì„¤ì •ì„ ì…‹íŒ…
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    //2) Startup Å¬·¡½º ÁöÁ¤
+                    //2) Startup í´ë˜ìŠ¤ ì§€ì •
                     webBuilder.UseStartup<Startup>();
                 });
         
-        // ¾Æ·¡¿Í °°Àº ÄÚµåÀÓ
+        // ì•„ë˜ì™€ ê°™ì€ ì½”ë“œì„
         //public static IHostBuilder CreateHostBuilder(string[] args)
         //    {
         //        return Host.CreateDefaultBuilder(args)

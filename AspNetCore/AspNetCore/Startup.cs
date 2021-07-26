@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+ï»¿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Routing.Constraints;
@@ -14,6 +14,8 @@ namespace AspNetCore
 {
     public class Startup
     {
+        // í…ŒìŠ¤íŠ¸ìž…ë‹ˆë‹¤
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,45 +24,45 @@ namespace AspNetCore
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        // °¢Á¾ ¼­ºñ½º¸¦ Ãß°¡ (DI) ¿µ¾÷ ½ÃÀÛ!
+        // ê°ì¢… ì„œë¹„ìŠ¤ë¥¼ ì¶”ê°€ (DI) ì˜ì—… ì‹œìž‘!
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            // DI ¼­ºñ½º¶õ? SRP(Single Responsibility Principle)
-            // ex) ·©Å· °ü·Ã ±â´ÉÀÌ ÇÊ¿äÇÏ¸é -> ·©Å· ¼­ºñ½º ¸¸µé¾î¼­ ÇÊ¿äÇÑ°É °¡Á®´Ù ¾¸
-            //     ¸ðµç°É ¼­ºñ½º·Î ÇÏ³ª¾¿ ºÐ¸®ÇØ¼­ °ü¸®ÇÑ´Ù´Â°Ô DIÀÇ ±âº»ÀûÀÎ °³³ä
+            // DI ì„œë¹„ìŠ¤ëž€? SRP(Single Responsibility Principle)
+            // ex) ëž­í‚¹ ê´€ë ¨ ê¸°ëŠ¥ì´ í•„ìš”í•˜ë©´ -> ëž­í‚¹ ì„œë¹„ìŠ¤ ë§Œë“¤ì–´ì„œ í•„ìš”í•œê±¸ ê°€ì ¸ë‹¤ ì”€
+            //     ëª¨ë“ ê±¸ ì„œë¹„ìŠ¤ë¡œ í•˜ë‚˜ì”© ë¶„ë¦¬í•´ì„œ ê´€ë¦¬í•œë‹¤ëŠ”ê²Œ DIì˜ ê¸°ë³¸ì ì¸ ê°œë…
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        // HTTP Reqeust Pipeline (NodeJS¿Í À¯»ç)
-        // ¾î¶² HTTP ¿äÃ»ÀÌ ¿ÔÀ» ¶§ ¾ÛÀÌ ¾î¶»°Ô ÀÀ´äÇÏ´ÂÁö ÀÏ·ÃÀÇ °úÁ¤À» ³ªÅ¸³¿
-        // 1) IIS, Apache µî¿¡ HTTP ¿äÃ» 
-        // 2) ASP.NET Core ¼­¹ö (Kestrel) Àü´Þ 
-        // 3) ¹Ìµé¿þ¾î Àû¿ë
-        //      ¹Ìµé¿þ¾î : HTTP request/response ¸¦ Ã³¸®ÇÏ´Â Áß°£ ºÎÇ° 
-        // 4) Controller·Î Àü´Þ (ÆÄÀÌÇÁ¶óÀÎ Àû¿ë)
-        // 5) Controller¿¡¼­ Ã³¸®ÇÏ°í View·Î Àü´Þ 
+        // HTTP Reqeust Pipeline (NodeJSì™€ ìœ ì‚¬)
+        // ì–´ë–¤ HTTP ìš”ì²­ì´ ì™”ì„ ë•Œ ì•±ì´ ì–´ë–»ê²Œ ì‘ë‹µí•˜ëŠ”ì§€ ì¼ë ¨ì˜ ê³¼ì •ì„ ë‚˜íƒ€ëƒ„
+        // 1) IIS, Apache ë“±ì— HTTP ìš”ì²­ 
+        // 2) ASP.NET Core ì„œë²„ (Kestrel) ì „ë‹¬ 
+        // 3) ë¯¸ë“¤ì›¨ì–´ ì ìš©
+        //      ë¯¸ë“¤ì›¨ì–´ : HTTP request/response ë¥¼ ì²˜ë¦¬í•˜ëŠ” ì¤‘ê°„ ë¶€í’ˆ 
+        // 4) Controllerë¡œ ì „ë‹¬ (íŒŒì´í”„ë¼ì¸ ì ìš©)
+        // 5) Controllerì—ì„œ ì²˜ë¦¬í•˜ê³  Viewë¡œ ì „ë‹¬ 
 
         // [Request]                 [Response]
-        //     [ÆÄÀÌÇÁ¶óÀÎ]      [ÆÄÀÌÇÁ¶óÀÎ]
-        //         [¸¶Áö¸· MVC EndPoint]
+        //     [íŒŒì´í”„ë¼ì¸]      [íŒŒì´í”„ë¼ì¸]
+        //         [ë§ˆì§€ë§‰ MVC EndPoint]
 
-        // ¹Ìµé¿þ¾î¿¡¼­ Ã³¸®ÇÑ °á°ú¹°À» ´Ù¸¥ ¹Ìµé¿þ¾î·Î ³Ñ±æ ¼ö ÀÖ´Ù 
-        // [ÆÄÀÌÇÁ¶óÀÎ]
+        // ë¯¸ë“¤ì›¨ì–´ì—ì„œ ì²˜ë¦¬í•œ ê²°ê³¼ë¬¼ì„ ë‹¤ë¥¸ ë¯¸ë“¤ì›¨ì–´ë¡œ ë„˜ê¸¸ ìˆ˜ ìžˆë‹¤ 
+        // [íŒŒì´í”„ë¼ì¸]
 
-        // [!] Controller¿¡¼­ Ã³¸®ÇÏÁö ¾Ê´Â ÀÌÀ¯?
-        // ex) ¸ðµç ¿äÃ»¸¶´Ù ·Î±ëÀ» ÇØ¾ß ÇÑ´Ù¸é?
-        //  ¸ðµç ÄÚµå¿¡ ÄÚµå¸¦ ³Ö´Â°Ç ÄÚµå°¡ ¸¹¾ÆÁö°í ¹Ýº¹ÀûÀÎ Èûµç ÀÛ¾÷. ?
-        //  ¹Ìµé¿þ¾î°¡ ¸ðµç ¿äÃ»¿¡ ´ëÇØ ÀÏ°ýÀûÀ¸·Î Ã³¸®ÇØÁÜ 
+        // [!] Controllerì—ì„œ ì²˜ë¦¬í•˜ì§€ ì•ŠëŠ” ì´ìœ ?
+        // ex) ëª¨ë“  ìš”ì²­ë§ˆë‹¤ ë¡œê¹…ì„ í•´ì•¼ í•œë‹¤ë©´?
+        //  ëª¨ë“  ì½”ë“œì— ì½”ë“œë¥¼ ë„£ëŠ”ê±´ ì½”ë“œê°€ ë§Žì•„ì§€ê³  ë°˜ë³µì ì¸ íž˜ë“  ìž‘ì—…. ?
+        //  ë¯¸ë“¤ì›¨ì–´ê°€ ëª¨ë“  ìš”ì²­ì— ëŒ€í•´ ì¼ê´„ì ìœ¼ë¡œ ì²˜ë¦¬í•´ì¤Œ 
 
-        // ¾î¶² ¹Ìµé¿þ¾î¿¡¼­ ¿¡·¯°¡ ¹ß»ýÇÏ¸é 
-        // ´Ù½Ã À§·Î Âß ¿¡·¯¸¦ ÀüÆÄ½ÃÅ´
+        // ì–´ë–¤ ë¯¸ë“¤ì›¨ì–´ì—ì„œ ì—ëŸ¬ê°€ ë°œìƒí•˜ë©´ 
+        // ë‹¤ì‹œ ìœ„ë¡œ ì­‰ ì—ëŸ¬ë¥¼ ì „íŒŒì‹œí‚´
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //app.UseStatusCodePages();
-            //app.UseStaticFiles();  // root Æú´õ¿¡ ÀÖ´Â ÆÄÀÏÀ» Àü´ÞÇØÁÖ´Â °£´ÜÇÑ ±â´É
-            //app.UseWelcomePage();   // ¼ø¼­°¡ Áß¿äÇÒ ¼ö ÀÖÀ½. UseWelcomePage ºÎÅÍ ½ÇÇàÇÏ¸é Áß°£¿¡ ¿äÃ»À» ¸Ô¾î¹ö¸®°í ´Ù½Ã µ¹·Áº¸³¿
+            //app.UseStaticFiles();  // root í´ë”ì— ìžˆëŠ” íŒŒì¼ì„ ì „ë‹¬í•´ì£¼ëŠ” ê°„ë‹¨í•œ ê¸°ëŠ¥
+            //app.UseWelcomePage();   // ìˆœì„œê°€ ì¤‘ìš”í•  ìˆ˜ ìžˆìŒ. UseWelcomePage ë¶€í„° ì‹¤í–‰í•˜ë©´ ì¤‘ê°„ì— ìš”ì²­ì„ ë¨¹ì–´ë²„ë¦¬ê³  ë‹¤ì‹œ ëŒë ¤ë³´ëƒ„
 
             if (env.IsDevelopment())
             {
@@ -75,64 +77,64 @@ namespace AspNetCore
 
             app.UseHttpsRedirection();
 
-            // CSS, JavaScript, ÀÌ¹ÌÁö µî ¿äÃ» ¹ÞÀ» ¶§ Ã³¸®   
+            // CSS, JavaScript, ì´ë¯¸ì§€ ë“± ìš”ì²­ ë°›ì„ ë•Œ ì²˜ë¦¬   
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
 
-            // ¶ó¿ìÆÃ(Routing)
-            // ¶ó¿ìÆÃÀº ±æÀâÀÌ ¶ó´Â ÀÇ¹Ì
-            // ¶ó¿ìÆÃÀÌ ÇÏ´Â ¿ªÇÒ : HTTP request°¡ ¿ÔÀ» ¶§ ´ã´ç Handler¿¡ ³Ñ°ÜÁÖ±â À§ÇØ¼­
-            //                    [HTTP request] <-> [´ã´ç Handler] µÑ »çÀÌ¸¦ MappingÇÔ
+            // ë¼ìš°íŒ…(Routing)
+            // ë¼ìš°íŒ…ì€ ê¸¸ìž¡ì´ ë¼ëŠ” ì˜ë¯¸
+            // ë¼ìš°íŒ…ì´ í•˜ëŠ” ì—­í•  : HTTP requestê°€ ì™”ì„ ë•Œ ë‹´ë‹¹ Handlerì— ë„˜ê²¨ì£¼ê¸° ìœ„í•´ì„œ
+            //                    [HTTP request] <-> [ë‹´ë‹¹ Handler] ë‘˜ ì‚¬ì´ë¥¼ Mappingí•¨
 
-            // APT.NET ÃÊ±â ¹öÀü¿¡¼­´Â /hello.aspx¿Í °°ÀÌ Ã³¸®ÇÏ´Â ÆÄÀÏ ÀÚÃ¼¸¦ URL¿¡ ÀÔ·Â 
-            // ´ÜÁ¡
-            //   1) ÆÄÀÏ ÀÌ¸§ÀÌ ¹Ù²î¸é? Å¬¶óÀÌ¾îÆ® ÂÊ¿¡¼­ °°ÀÌ Ã³¸®ÇÏÁö ¾ÊÀ¸¸é Á¢¼Ó ºÒ°¡´É
-            //   2) /hello.aspx?method=1&id=3 .. ¿Í °°ÀÌ QueryString ¹æ½ÄÀÇ URL
-            //       -> Áö±Ý ¹æ½ÄÀº /hello/get/3 °ú °°ÀÌ ¶æÀ» ¸íÈ®È÷ ¾Ë ¼ö ÀÖ°Ô »ç¿ë
+            // APT.NET ì´ˆê¸° ë²„ì „ì—ì„œëŠ” /hello.aspxì™€ ê°™ì´ ì²˜ë¦¬í•˜ëŠ” íŒŒì¼ ìžì²´ë¥¼ URLì— ìž…ë ¥ 
+            // ë‹¨ì 
+            //   1) íŒŒì¼ ì´ë¦„ì´ ë°”ë€Œë©´? í´ë¼ì´ì–´íŠ¸ ìª½ì—ì„œ ê°™ì´ ì²˜ë¦¬í•˜ì§€ ì•Šìœ¼ë©´ ì ‘ì† ë¶ˆê°€ëŠ¥
+            //   2) /hello.aspx?method=1&id=3 .. ì™€ ê°™ì´ QueryString ë°©ì‹ì˜ URL
+            //       -> ì§€ê¸ˆ ë°©ì‹ì€ /hello/get/3 ê³¼ ê°™ì´ ëœ»ì„ ëª…í™•ížˆ ì•Œ ìˆ˜ ìžˆê²Œ ì‚¬ìš©
 
-            // ±âº» °ü·Ê(Convention)´Â Controller/Action/Id Çü½Ä
-            // ´Ù¸¥ ÀÌ¸§ ÁöÁ¤ÇÏ°í ½ÍÀ»‹ž?
-            //  - API ¼­¹ö·Î »ç¿ëÇÏ°í ½ÍÀ» ¶§, URL ÁÖ¼Ò°¡ ¾î¶² ¿ªÇÒÀ» ÇÏ´ÂÁö ´õ ¸íÈ®ÇÏ°Ô ÈùÆ®¸¦ ÁÖ°í ½Í´Ù°Å³ª
-            //  - ±»ÀÌ Controller¸¦ ¼öÁ¤ÇÏÁö ¾Ê°í ¿¬°áµÈ URL¸¸ ±³Ã¼ÇÏ°í ½Í´Ù!
+            // ê¸°ë³¸ ê´€ë¡€(Convention)ëŠ” Controller/Action/Id í˜•ì‹
+            // ë‹¤ë¥¸ ì´ë¦„ ì§€ì •í•˜ê³  ì‹¶ì„ë–ˆ?
+            //  - API ì„œë²„ë¡œ ì‚¬ìš©í•˜ê³  ì‹¶ì„ ë•Œ, URL ì£¼ì†Œê°€ ì–´ë–¤ ì—­í• ì„ í•˜ëŠ”ì§€ ë” ëª…í™•í•˜ê²Œ ížŒíŠ¸ë¥¼ ì£¼ê³  ì‹¶ë‹¤ê±°ë‚˜
+            //  - êµ³ì´ Controllerë¥¼ ìˆ˜ì •í•˜ì§€ ì•Šê³  ì—°ê²°ëœ URLë§Œ êµì²´í•˜ê³  ì‹¶ë‹¤!
 
-            // RoutingÀÌ Àû¿ëµÇ·Á¸é [¹Ìµé¿þ¾î ÆÄÀÌÇÁ¶óÀÎ]¿¡ ÀÇÇØ Àü´ÞÀÌ µÇ¾î¾ß ÇÔ
-            // - Áß°£¿¡ ¿¡·¯°¡ ³­´Ù°Å³ª, Æ¯Á¤ ¹Ìµé¿þ¾î°¡ Èå¸§À» °¡·ÎÃ«´Ù¸é ¶ó¿ìÆÃ X
+            // Routingì´ ì ìš©ë˜ë ¤ë©´ [ë¯¸ë“¤ì›¨ì–´ íŒŒì´í”„ë¼ì¸]ì— ì˜í•´ ì „ë‹¬ì´ ë˜ì–´ì•¼ í•¨
+            // - ì¤‘ê°„ì— ì—ëŸ¬ê°€ ë‚œë‹¤ê±°ë‚˜, íŠ¹ì • ë¯¸ë“¤ì›¨ì–´ê°€ íë¦„ì„ ê°€ë¡œì±˜ë‹¤ë©´ ë¼ìš°íŒ… X
 
-            // ÆÄÀÌÇÁ¶óÀÎ ³¡±îÁö µµ´ÞÇßÀ¸¸é, MapControllerRoute¿¡ ÀÇÇØ Routing ±ÔÄ¢ÀÌ °áÁ¤
-            //                                              (¿øÇÏ´Â ÆÐÅÏ ¿©·¯°³¸¦ ¼³Á¤ °¡´É)
-            // - ÆÐÅÏÀ» ÀÌ¿ëÇÑ ¹æ½ÄÀ¸·Î RoutingÀÌ Àû¿ëµÇ¼­ ÁÖ¼Ò¸¦ Ã£Áö¸¸
-            // - °æ¿ì¿¡ µû¶ó Attribute RoutingÀÌ¶õ°É »ç¿ëÇØ¼­ Routing ±ÔÄ¢À» µ¤¾î¾µ ¼ö ÀÖÀ½ 
+            // íŒŒì´í”„ë¼ì¸ ëê¹Œì§€ ë„ë‹¬í–ˆìœ¼ë©´, MapControllerRouteì— ì˜í•´ Routing ê·œì¹™ì´ ê²°ì •
+            //                                              (ì›í•˜ëŠ” íŒ¨í„´ ì—¬ëŸ¬ê°œë¥¼ ì„¤ì • ê°€ëŠ¥)
+            // - íŒ¨í„´ì„ ì´ìš©í•œ ë°©ì‹ìœ¼ë¡œ Routingì´ ì ìš©ë˜ì„œ ì£¼ì†Œë¥¼ ì°¾ì§€ë§Œ
+            // - ê²½ìš°ì— ë”°ë¼ Attribute Routingì´ëž€ê±¸ ì‚¬ìš©í•´ì„œ Routing ê·œì¹™ì„ ë®ì–´ì“¸ ìˆ˜ ìžˆìŒ 
 
-            // Route Template (Pattern) - ¾Æ·¡ º¸ÀÌ´Â ¶ó¿ìÆÃ ÆÐÅÏ ¸ÅÄª
-            // name : "default" -> ´Ù¼ö¸¦ ¼³Á¤ ÇÒ ¼ö ÀÖ´Ù´Â ÀÇ¹Ì
+            // Route Template (Pattern) - ì•„ëž˜ ë³´ì´ëŠ” ë¼ìš°íŒ… íŒ¨í„´ ë§¤ì¹­
+            // name : "default" -> ë‹¤ìˆ˜ë¥¼ ì„¤ì • í•  ìˆ˜ ìžˆë‹¤ëŠ” ì˜ë¯¸
 
             app.UseEndpoints(endpoints =>
             {
-                // api : literal value ( °íÁ¤ ¹®ÀÚ¿­ °ª? ²À ÇÊ¿äÇÔ)
-                // {controller}, {action} : route parameter (²À ÇÊ¿äÇÔ)
-                // {controller=Home}/{action=Index} : Optional Route parameter (¾øÀ¸¸é ¾Ë¾Æ¼­ ±âº»°ª ¼³Á¤)
-                // {id?} : Optional Route parameter (¾ø¾îµµ µÊ)
-                // [ÁÖÀÇ!] {controller}, {action} Àº ¹«Á¶°Ç Á¤ÇØÁ®¾ß ÇÑ´Ù! (¸ÅÄª or ±âº»°ªÀ» ÅëÇØ¼­)
-                // ¶ó¿ìÆÃ ÆÐÅÏ ¼ø¼­¸¦ °æ¿ì¿¡ µû¶ó ÁÖÀÇÇØ¼­ Á¤ÇØÁà¾ß ÇÑ´Ù.
+                // api : literal value ( ê³ ì • ë¬¸ìžì—´ ê°’? ê¼­ í•„ìš”í•¨)
+                // {controller}, {action} : route parameter (ê¼­ í•„ìš”í•¨)
+                // {controller=Home}/{action=Index} : Optional Route parameter (ì—†ìœ¼ë©´ ì•Œì•„ì„œ ê¸°ë³¸ê°’ ì„¤ì •)
+                // {id?} : Optional Route parameter (ì—†ì–´ë„ ë¨)
+                // [ì£¼ì˜!] {controller}, {action} ì€ ë¬´ì¡°ê±´ ì •í•´ì ¸ì•¼ í•œë‹¤! (ë§¤ì¹­ or ê¸°ë³¸ê°’ì„ í†µí•´ì„œ)
+                // ë¼ìš°íŒ… íŒ¨í„´ ìˆœì„œë¥¼ ê²½ìš°ì— ë”°ë¼ ì£¼ì˜í•´ì„œ ì •í•´ì¤˜ì•¼ í•œë‹¤.
 
-                // Constraint(Á¦¾à»çÇ×) °ü·Ã
+                // Constraint(ì œì•½ì‚¬í•­) ê´€ë ¨
                 // {controller=Home}/{action=Index}/{id?}
-                // ¿¹¸¦µé¾î idÀÇ Çü½ÄÀÌ ±¤¹üÀ§ÇÏ´Ù´Â ¹®Á¦°¡ ÀÖÀ½ (int¿©¾ß ÇÏ´Âµ¥ stringÀÌ ¿Â´Ù°Å³ª)
-                //    {cc:int} Á¤¼ö¸¸
-                //    {cc:min(18)} 18ÀÌ»ó Á¤¼ö¸¸
-                //    {cc:length(5)} 5±ÛÀÚ string
+                // ì˜ˆë¥¼ë“¤ì–´ idì˜ í˜•ì‹ì´ ê´‘ë²”ìœ„í•˜ë‹¤ëŠ” ë¬¸ì œê°€ ìžˆìŒ (intì—¬ì•¼ í•˜ëŠ”ë° stringì´ ì˜¨ë‹¤ê±°ë‚˜)
+                //    {cc:int} ì •ìˆ˜ë§Œ
+                //    {cc:min(18)} 18ì´ìƒ ì •ìˆ˜ë§Œ
+                //    {cc:length(5)} 5ê¸€ìž string
 
-                // Default Value¿Í Constraint¸¦ ¼³Á¤ÇÏ´Â 2¹øÂ° ¹æ¹ý (Anonymous Object)
+                // Default Valueì™€ Constraintë¥¼ ì„¤ì •í•˜ëŠ” 2ë²ˆì§¸ ë°©ë²• (Anonymous Object)
 
-                // Match-All (Á¶Ä¿Ä«µå)
-                // {*jocker} *¸¦ ºÙÀÌ¸é ¸ðµç ¹®ÀÚ¿­À» ´Ù ¸ÅÄª½ÃÄÑÁÜ ('/' µµ Æ÷ÇÔÇØ¼­)
-                // °¡Àå ±¤¹üÀ§ÇÏ¹Ç·Î ¿Ø¸¸ÇÏ¸é ¸Ç ¸¶Áö¸·¿¡ µÖ¾ßÇÑ´Ù
+                // Match-All (ì¡°ì»¤ì¹´ë“œ)
+                // {*jocker} *ë¥¼ ë¶™ì´ë©´ ëª¨ë“  ë¬¸ìžì—´ì„ ë‹¤ ë§¤ì¹­ì‹œì¼œì¤Œ ('/' ë„ í¬í•¨í•´ì„œ)
+                // ê°€ìž¥ ê´‘ë²”ìœ„í•˜ë¯€ë¡œ ì™ ë§Œí•˜ë©´ ë§¨ ë§ˆì§€ë§‰ì— ë‘¬ì•¼í•œë‹¤
 
-                // Redirection : ´Ù¸¥ URL·Î Åä½º
-                // Redirection(URL) << URL Á÷Á¢ ¸¸µé¾î¼­
+                // Redirection : ë‹¤ë¥¸ URLë¡œ í† ìŠ¤
+                // Redirection(URL) << URL ì§ì ‘ ë§Œë“¤ì–´ì„œ
                 // - Url.Action
                 // - Url.RouteUrl
                 // RedirectToAction()
@@ -143,14 +145,14 @@ namespace AspNetCore
                 //    pattern: "api/{controller}/{action}/{test:int?}",
                 //    defaults: new {controller="Home", action="Privacy"} );
 
-                // ¾Æ·¡¿Í °°ÀÌ ¼³Á¤µµ °¡´É
+                // ì•„ëž˜ì™€ ê°™ì´ ì„¤ì •ë„ ê°€ëŠ¥
                 endpoints.MapControllerRoute(
                   name: "test",
                   pattern: "api/{test}",
                   defaults: new { controller = "Home", action = "Privacy" },
                   constraints: new { test = new IntRouteConstraint() });
 
-                // ¶ó¿ìÆÃ ÆÐÅÏ ¼³Á¤
+                // ë¼ìš°íŒ… íŒ¨í„´ ì„¤ì •
                 endpoints.MapControllerRoute(
                     name: "default", 
                     pattern: "{controller=Home}/{action=Index}/{id?}");
