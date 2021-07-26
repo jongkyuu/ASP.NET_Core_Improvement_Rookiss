@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -137,17 +138,17 @@ namespace AspNetCore
                 // RedirectToAction()
                 // RedirectToRoute()
 
-                endpoints.MapControllerRoute(
-                    name: "test",
-                    pattern: "api/{controller}/{action}/{test:int?}",
-                    defaults: new {controller="Home", action="Privacy"} );
+                //endpoints.MapControllerRoute(
+                //    name: "test",
+                //    pattern: "api/{controller}/{action}/{test:int?}",
+                //    defaults: new {controller="Home", action="Privacy"} );
 
                 // 아래와 같이 설정도 가능
-                //endpoints.MapControllerRoute(
-                //  name: "test",
-                //  pattern: "api/{test}",
-                //  defaults: new { controller = "Home", action = "Privacy" }
-                //  constraints: new { test = new IntRouteConstraint() } );
+                endpoints.MapControllerRoute(
+                  name: "test",
+                  pattern: "api/{test}",
+                  defaults: new { controller = "Home", action = "Privacy" },
+                  constraints: new { test = new IntRouteConstraint() });
 
                 // 라우팅 패턴 설정
                 endpoints.MapControllerRoute(
