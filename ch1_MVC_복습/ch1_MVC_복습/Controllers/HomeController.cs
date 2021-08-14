@@ -23,8 +23,13 @@ namespace ch1_MVC_복습.Controllers
             return View();
         }
 
+        // 서버주소/Home/Privacy 주소로 접근
         public IActionResult Privacy()
         {
+            // Controller에서 View로 데이터를 넘기는 방법
+            ViewData["Message"] = "Data From Privacy";
+            // ViewData는 선언해 준 적이 없지만 Controller 안에 구현되어 있음 
+
             return View();
         }
 
